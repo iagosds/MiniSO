@@ -1,6 +1,7 @@
 from user import User, users
 import hashlib
 import os
+from getpass import getpass
 
 def CreateSalt():
     return os.urandom(10).hex()
@@ -18,7 +19,7 @@ def signin():
         print('Nome já está em uso')
         login()
     else:
-        password = input('Digite a senha: ') # Não mostrar digitação
+        password = getpass('Digite a senha: ') # Não mostrar digitação
         salt = CreateSalt()
         password = CreateHash(password, salt)
         users[name] = salt, password
@@ -34,7 +35,7 @@ def login():
         print('Usuário não cadastrado')
         return
     salt, senha_hash = users[name]
-    senha = input('Digite a senha: ') # Não mostrar digitação
+    senha = getpass('Digite a senha: ') # Não mostrar digitação
     if CreateHash(senha, salt) == senha_hash:
         logged = name
         return logged
