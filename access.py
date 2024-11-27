@@ -17,7 +17,7 @@ def signin(logged = logged):
         print('Nome já está em uso')
         login()
     else:
-        password = input('Digite a senha: ')
+        password = input('Digite a senha: ') # Não mostrar digitação
         salt = CreateSalt()
         password = CreateHash(password, salt)
         users[name] = salt, password
@@ -31,7 +31,7 @@ def login(logged = logged):
         print('Usuário não cadastrado')
         return
     salt, senha_hash = users[name]
-    senha = input('Digite a senha: ')
+    senha = input('Digite a senha: ') # Não mostrar digitação
     if CreateHash(senha, salt) == senha_hash:
         logged = name
         return logged
@@ -56,10 +56,10 @@ def login(logged = logged):
 #             break
 #         else:
 #             print("Opção inválida, tente novamente.")
-if not users:
-    signin()
-else:
-    login()
+# if not users:
+#     signin()
+# else:
+#     login()
 
 
 # 3. Caso o último usuário do MiniSO seja excluído, deve ser executado o passo 1 assim que ele seja apagado e para cada nova execução
