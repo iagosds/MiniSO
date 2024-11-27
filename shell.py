@@ -2,6 +2,7 @@ import os
 import string
 import re
 from processos import cria_processo
+from dir import Dir, dirs
 
 def extrair_caminho(comando):
     padrao = r"^(criar|apagar) (diretorio|arquivo) (.+)$"
@@ -13,7 +14,7 @@ def extrair_caminho(comando):
 ################################
 
 
-def cria_arquivo(caminho_arquivo):
+def cria_arquivo(caminho_arquivo, logged):
     if cria_processo():
         if '/' in caminho_arquivo:
             dir_path = os.path.dirname(caminho_arquivo)
@@ -22,19 +23,25 @@ def cria_arquivo(caminho_arquivo):
                 
         else:
             # O arquivo será criado no diretório corrente
+            dir = Dir(caminho_arquivo, logged, 'file')
+            dirs[caminho_arquivo] = dir
             dir_path = os.getcwd()
             caminho_arquivo = os.path.join(dir_path, caminho_arquivo)
-
         with open(caminho_arquivo, 'w') as f:
             pass
 
 
-def apaga_arquivo(caminho_arquivo):
-    if cria_processo():
-        if os.path.isfile(caminho_arquivo):
-            os.remove(caminho_arquivo)
+def apaga_arquivo(caminho_arquivo, logged):
+    if os.path.isfile(caminho_arquivo) and caminho_arquivo in dirs:
+        print(logged, dirs[caminho_arquivo].owner)
+        if logged == dirs[caminho_arquivo].owner:
+            if cria_processo():
+                   os.remove(caminho_arquivo)
+                   del dirs[caminho_arquivo]
         else:
-            print('O arquivo não existe.')
+            print("Usuário não tem permissão para acessar esse arquivo")
+    else:
+        print('O arquivo não existe.')
 
 
 def cria_dir(caminho_dir):
@@ -59,6 +66,7 @@ def apaga_dir(caminho_dir):
                 print('O diretório não existe ou não está vazio')
     
 def listar():
+    print(dirs)
     if cria_processo():
         for i in os.listdir(os.getcwd()):
             print('\t', i)

@@ -24,9 +24,9 @@ if logged is not None:
         comando = input()
         caminho = extrair_caminho(comando)
         if comando.startswith("criar arquivo"):
-            cria_arquivo(caminho)
+            cria_arquivo(caminho, logged)
         elif comando.startswith("apagar arquivo"):  
-            apaga_arquivo(caminho)
+            apaga_arquivo(caminho, logged)
         elif comando.startswith("criar diretorio"):
             cria_dir(caminho)
         elif comando.startswith("apagar diretorio"):
@@ -34,4 +34,4 @@ if logged is not None:
         elif comando == 'listar':
             listar()
         elif comando == f'deletar usuario {logged}':
-            DeleteUser()
+            logged = DeleteUser()

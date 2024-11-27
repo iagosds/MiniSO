@@ -53,7 +53,7 @@ def DeleteUser():
         del users[logged]
         print(f'Usuário {logged} digitado com sucesso.')
         logged = None
-        signin()
+        logged = signin()
         return logged
     else:
         print('Senha incorreta, usuário não foi deletado')
