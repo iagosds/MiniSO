@@ -63,17 +63,4 @@ def listar():
         for i in os.listdir(os.getcwd()):
             print('\t', i)
     
-comando = None
-while comando != "fechar shell":
-    comando = input()
-    caminho = extrair_caminho(comando)
-    if comando.startswith("criar arquivo"):
-        cria_arquivo(caminho)
-    elif comando.startswith("apagar arquivo"):  
-        apaga_arquivo(caminho)
-    elif comando.startswith("criar diretorio"):
-        cria_dir(caminho)
-    elif comando.startswith("apagar diretorio"):
-        apaga_dir(caminho)
-    elif comando == 'listar':
-        listar()
+

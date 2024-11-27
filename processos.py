@@ -18,7 +18,6 @@ def cria_processo(memoria = memoria):
     process = Processo(2)
     print(process.id)
     if firstFit(process):
-        print(memoria)
         return True
     else:
         print('Memória insuficiente')

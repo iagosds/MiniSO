@@ -1,16 +1,25 @@
-from access import logged, signin, login, users, DeleteUser
+from user import users
+from access import logged, signin, login, DeleteUser
 from shell import cria_arquivo, cria_dir, apaga_arquivo, apaga_dir, listar, extrair_caminho
 import os
-print('------ MINI SHELL ------\n')
+
+# 1. Caso não exista nenhum usuário cadastrado no MiniSO, será solicitado no shell,
+#  a criação de um usuário e com senha. A senha deve ser salva utilizando um salt e em hash (SHA-512),
+#  como foi feito no exercício de segurança.
+
+# 2. Caso haja pelo menos 1 usuário cadastrado, o shell solicitará usuário e senha para login.
+#  A senha não deve aparecer enquanto o usuário a digita! (Pode ficar com asteriscos ou sem nada no lugar)
+
 if not users:
-    signin()
+    logged = signin()
 else:
-    login()
+    logged = login()
 
-os.system('cls' if os.name == 'nt' else 'clear')
+os.system('cls')
 
-if logged != None:
+if logged is not None:
     comando = None
+    print('------ MINI SHELL ------')
     while comando != "fechar shell":
         comando = input()
         caminho = extrair_caminho(comando)
@@ -24,3 +33,5 @@ if logged != None:
             apaga_dir(caminho)
         elif comando == 'listar':
             listar()
+        elif comando == f'deletar usuario {logged}':
+            DeleteUser()
